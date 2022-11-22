@@ -42,19 +42,20 @@ service:
 
 ingress:
   enabled: true
-  className: nginx
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  # className: nginx
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-demo-admin"    
   hosts:
     - host: k8s.leequyt.monster
       paths:
         - path: /
           pathType: Prefix
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+  - secretName: demo-admin-tls
+    hosts:
+      - k8s.leequyt.monster
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
